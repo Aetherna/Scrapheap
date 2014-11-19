@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "Notes")
 public class Note {
     @DatabaseField(generatedId = true)
-    private long id;
+    private int id;
 
     @DatabaseField(canBeNull = false)
     private String noteName;
@@ -39,5 +39,9 @@ public class Note {
     @Override
     public String toString() {
         return new StringBuilder().append(id).append(" ").append(noteName).append(" ").append(noteValue).toString();
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -15,6 +15,13 @@
         android:id="@+id/createNote"
         android:text="@string/createNote" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clearNotes"
+        android:text="@string/clearNotes"
+        android:layout_toRightOf="@id/createNote"/>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

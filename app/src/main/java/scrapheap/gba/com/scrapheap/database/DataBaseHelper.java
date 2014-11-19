@@ -18,7 +18,7 @@ import scrapheap.gba.com.scrapheap.utils.SLog;
 
 public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "ScrapheapDB";
 
     private Dao<Note, Integer> noteDao;
@@ -47,6 +47,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
             throw new RuntimeException(e);
         }
         onCreate(database,connectionSource);
+        SLog.i("Updated database");
     }
 
     public Dao<Note, Integer> getNoteDao() throws SQLException {

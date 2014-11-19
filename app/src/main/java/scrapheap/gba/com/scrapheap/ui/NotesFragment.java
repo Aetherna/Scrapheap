@@ -12,6 +12,7 @@ import com.j256.ormlite.dao.Dao;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import java.sql.SQLException;
@@ -37,6 +38,9 @@ public class NotesFragment extends Fragment {
     Button createNote;
 
     @ViewById
+    Button clearNotes;
+
+    @ViewById
     ListView notes;
 
     private NotesAdapter adapter;
@@ -53,14 +57,39 @@ public class NotesFragment extends Fragment {
         Note note = new Note("Note", "Time:  " + System.currentTimeMillis());
         try {
             noteDao.create(note);
-
-            List<Note> notes = noteDao.queryForAll();
-            adapter.clear();
-            adapter.addAll(notes);
-
+            updateNotes();
         } catch (SQLException e) {
             Toast.makeText(getActivity(), "Failed :/", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+
+    private void updateNotes() throws SQLException {
+        List<Note> notes = noteDao.queryForAll();
+        adapter.clear();
+        adapter.addAll(notes);
+    }
+
+    @ItemClick
+    public void notes(int position) {
+        Note clickedNote = (Note) notes.getItemAtPosition(position);
+        try {
+            Note fetchedNote = noteDao.queryForId(clickedNote.getId());
+            Toast.makeText(getActivity(), "Fetched " + fetchedNote.toString(), Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to fetch from db " + clickedNote.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Click
+    public void clearNotes(){
+        try {
+            noteDao.delete(noteDao.queryForAll());
+            updateNotes();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Unable to clear db ", Toast.LENGTH_LONG).show();
         }
     }
 
