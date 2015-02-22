@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -27,7 +27,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -54,7 +54,7 @@ dependencies {
 
 apt{
     arguments{
-        androidManifestFile variant.processResources.manifestFile
+        androidManifestFile variant.outputs[0].processResources.manifestFile
         resourcePackageName 'scrapheap.gba.com.scrapheap'
     }
 }
